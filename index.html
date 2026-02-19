@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Socket Test</title>
+</head>
+<body>
+
+<h2>Start Trip Test</h2>
+<button onclick="startTrip()">Start Trip</button>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+<script>
+  // connect to backend
+  const socket = io("http://localhost:5000", {
+  transports: ["websocket"]});
+
+  socket.on("connect", () => {
+    console.log("Connected to backend:", socket.id);
+  });
+
+  function startTrip() {
+
+    // Example coordinates
+    const lat = 30.6139;
+    const lng = 77.2090;
+
+    socket.emit("send-location", {
+      lat: lat,
+      lng: lng
+    });
+
+    console.log("Location sent");
+  }
+</script>
+
+</body>
+</html>
